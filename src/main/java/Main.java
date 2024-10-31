@@ -1,3 +1,4 @@
+
 import java.util.Scanner;
 
 public class Main {
@@ -38,31 +39,42 @@ public class Main {
             }
 
             System.out.println("Состояние виселицы: ");
-            System.out.println(game.getGallows().conditionGallows());
+            System.out.println(game.outputGallows());
 
-            System.out.println("Загаданное слово: " + game.getWord().getStateWord());
+            System.out.println("Загаданное слово: " + game.outputWord());
             System.out.println("Количество ошибок: " + game.getQuantityError() + "\n");
 
             System.out.print("Введите букву: ");
             char letter = scanner.next().charAt(0);
 
-            if (game.getWord().openingLetters(letter)) {
+            if (!Character.UnicodeBlock.of(letter).equals(Character.UnicodeBlock.CYRILLIC)) {
+                System.out.println("Только символы кириллицы!\n");
+                continue;
+            }
+
+            if(!game.getCharactersEntered().add(letter)) {
+                System.out.println("Этот символ уже был!");
+                continue;
+            }
+
+            if (game.checkingLetter(letter)) {
                 System.out.println("Есть такая буква!\n");
 
                 if (game.checkWin()) {
                     System.out.println("Вы победили!\n");
-                    System.out.println("Отгаданное слово: " + game.getWord().getValue());
+                    System.out.println("Отгаданное слово: " + game.outputWord());
                     game = new Game();
                 }
 
             } else {
-                game.getGallows().changeCondition();
-                game.increaseErrors();
+                game.outputGallows();
                 System.out.println("ТАКОЙ БУКВЫ НЕТ!\n");
             }
 
             if (game.getQuantityError() == 6) {
-                System.out.println("ВЫ ПРОИГРАЛИ!");
+                System.out.println(game.outputGallows());
+                System.out.println("ВЫ ПРОИГРАЛИ!\n");
+                System.out.println("Это было слово: " + game.outputWord());
                 game = new Game();
             }
 

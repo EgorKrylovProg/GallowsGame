@@ -23,25 +23,33 @@ public class Word {
         return Dictionary.getWord(number);
     }
 
-    public int getQuantityLetters() {
-        return this.quantityLetters;
-    }
+    public void openingLetters(char ch) {
 
-    public boolean openingLetters(char letter) {
-        boolean flag = false;
-
-        for (int i = 0; i < value.length(); i++) {
-            if (letters[i] == letter) {
-                flag = true;
+        for (int i = 0; i < quantityLetters; i++) {
+            if (ch == letters[i]) {
                 quantityOpenLetters++;
-
-                openLetters[i] = letter;
+                openLetters[i] = ch;
             }
         }
-        return flag;
     }
 
-    public String getStateWord() {
+    public int getQuantityLetters() {
+        return quantityLetters;
+    }
+
+    public int getQuantityOpenLetters() {
+        return quantityOpenLetters;
+    }
+
+    public char[] getLetters() {
+        return letters;
+    }
+
+    public void setWordFinish() {
+        openLetters = letters;
+    }
+
+    public String stateWord() {
         StringBuilder str = new StringBuilder("|");
 
         for (char letter: openLetters) {
@@ -52,11 +60,15 @@ public class Word {
         return str.toString();
     }
 
-    public boolean checkOpeningLetters() {
-        return quantityLetters  == quantityOpenLetters;
-    }
+    @Override
+    public String toString() {
+        StringBuilder str = new StringBuilder("|");
 
-    public String getValue() {
-        return value;
+        for (char letter: letters) {
+            if (letter == 0) letter = '*';
+            str.append(letter).append("|");
+        }
+
+        return str.toString();
     }
 }

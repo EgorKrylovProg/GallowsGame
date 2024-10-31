@@ -1,6 +1,6 @@
 public class Gallows {
 
-    private int CONDITION = 0;
+    private int CONDITION;
 
     private final String[] gallows = {
                     "  +---+\n" +
